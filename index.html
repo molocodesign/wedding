@@ -2343,6 +2343,7 @@ wrap.addEventListener('wheel', (e) => {
 let lastTouches = null;
 
 wrap.addEventListener('touchstart', (e) => {
+  if (e.target.closest('.floor-island')) return;
   e.preventDefault();
   if (e.touches.length === 1 && !e.target.closest('.floor-table')) {
     isPanning = true;
