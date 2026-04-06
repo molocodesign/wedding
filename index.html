@@ -130,7 +130,7 @@
   }
 
   /* PANELS */
-  .panel { display: none; flex-direction: column; flex: 1; min-height: 0; }
+  .panel { display: none; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; }
   .panel.active { display: flex; }
 
   /* BUTTONS */
@@ -403,6 +403,7 @@
     background: var(--warm-white);
     cursor: grab;
     touch-action: none;
+    min-height: 0;
   }
 
   .floorplan-wrap:active { cursor: grabbing; }
@@ -681,7 +682,7 @@
   /* ZOOM CONTROLS */
   .zoom-controls {
     position: absolute;
-    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    bottom: calc(49px + env(safe-area-inset-bottom, 0px) + 16px);
     right: 20px;
     display: flex;
     flex-direction: column;
