@@ -116,7 +116,7 @@
   }
 
   /* PANELS */
-  .panel { display: none; height: calc(100vh - 109px); height: calc(100dvh - 109px); }
+  .panel { display: none; height: calc(var(--real-vh, 100vh) - 109px); }
   .panel.active { display: flex; flex-direction: column; }
 
   /* BUTTONS */
@@ -831,7 +831,11 @@
   .drawer-overlay {
     display: none;
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var(--real-vh, 100vh);
     background: rgba(44,37,32,0.35);
     z-index: 300;
   }
@@ -843,8 +847,7 @@
     top: 0;
     right: 0;
     width: 280px;
-    height: 100%;
-    height: 100dvh;
+    height: var(--real-vh, 100vh);
     background: var(--surface);
     border-left: 1px solid var(--border);
     z-index: 301;
@@ -1983,6 +1986,13 @@ function loadSampleData() {
 }
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
+// ─── REAL VIEWPORT HEIGHT (fixes iOS Safari bottom bar) ──────────────────────
+function setRealVh() {
+  document.documentElement.style.setProperty('--real-vh', window.innerHeight + 'px');
+}
+setRealVh();
+window.addEventListener('resize', setRealVh);
+
 // Surface JS errors visibly instead of silent white screen
 window.onerror = function(msg, src, line, col, err) {
   document.body.innerHTML = '<div style="padding:32px;font-family:sans-serif;color:#c0392b">' +
