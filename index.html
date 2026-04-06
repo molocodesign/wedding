@@ -34,7 +34,7 @@
     --warning: #e67e22;
     --shadow: 0 2px 12px rgba(44,37,32,0.08);
     --shadow-md: 0 4px 24px rgba(44,37,32,0.12);
-    --radius: 10px;
+    --radius: 8px;
     --radius-lg: 16px;
   }
 
@@ -66,7 +66,6 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: var(--shadow);
   }
 
   .app-title {
@@ -138,7 +137,8 @@
     font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
     font-size: 13px;
     font-weight: 500;
-    padding: 8px 16px;
+    height: 36px;
+    padding: 0 16px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     cursor: pointer;
@@ -147,6 +147,7 @@
     align-items: center;
     gap: 6px;
     white-space: nowrap;
+    box-sizing: border-box;
   }
 
   .btn-primary {
@@ -174,34 +175,210 @@
 
   .btn-sm { font-size: 12px; padding: 5px 10px; }
 
-  /* GUEST LIST PANEL */
-  .guests-toolbar {
-    padding: 16px 24px;
+  /* GUEST PANEL HEADER */
+  .guests-panel-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 24px 12px;
+    background: var(--surface);
+    flex-shrink: 0;
+  }
+
+  .guests-heading {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-dark);
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+
+  /* FILTERS BAR */
+  .guests-filters {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 0 24px 12px;
     background: var(--surface);
     border-bottom: 1px solid var(--border);
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    flex-wrap: wrap;
+    flex-shrink: 0;
   }
+
+  /* FILTER TOGGLE BUTTON */
+  .filter-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 12px;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-mid);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+
+  .filter-toggle-btn:hover { background: var(--surface); }
+  .filter-toggle-btn.active { border-color: var(--gold); color: var(--gold-dark); background: #fdf8ee; }
+
+  .filter-badge {
+    background: var(--gold);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+  }
+
+  /* FILTER PANEL */
+  .filter-panel {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px 24px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .filter-panel.open { display: flex; }
+
+  .filter-chip-group { display: flex; flex-direction: column; gap: 7px; }
+
+  .filter-chip-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-light);
+  }
+
+  .filter-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .filter-chip {
+    font-size: 13px;
+    font-weight: 400;
+    padding: 5px 13px;
+    border-radius: 99px;
+    border: 1px solid var(--border);
+    background: var(--warm-white);
+    color: var(--text-mid);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .filter-chip:hover { border-color: var(--gold-light); color: var(--text-dark); }
+  .filter-chip.active { background: #fdf8ee; border-color: var(--gold); color: var(--gold-dark); font-weight: 500; }
+
+  .filter-clear-btn {
+    font-size: 12px;
+    color: var(--text-light);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    align-self: flex-start;
+    transition: color 0.15s;
+  }
+
+  .filter-clear-btn:hover { color: var(--text-mid); }
+
+
+  @media (max-width: 600px) {
+    .guests-panel-header { padding: 16px 16px 12px; }
+    .guests-filters { padding: 0 16px 12px; }
+    .filter-panel { padding: 12px 16px; }
+  }
+
+  /* VIEW TOGGLE */
+  .view-toggle {
+    display: flex;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .view-toggle-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+    border: none;
+    cursor: pointer;
+    color: var(--text-light);
+    transition: all 0.15s;
+  }
+
+  .view-toggle-btn:first-child { border-right: 1px solid var(--border); }
+  .view-toggle-btn.active { background: var(--warm-white); color: var(--gold-dark); }
+  .view-toggle-btn:hover:not(.active) { color: var(--text-mid); }
+
 
   .search-wrap {
     position: relative;
     flex: 1;
-    min-width: 160px;
+    min-width: 0;
   }
 
-  .search-wrap svg {
+  .search-wrap > svg {
     position: absolute;
     left: 10px;
     top: 50%;
     transform: translateY(-50%);
     color: var(--text-light);
+    pointer-events: none;
   }
+
+  .search-clear {
+    position: absolute;
+    right: 7px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: none;
+    background: var(--border);
+    color: var(--text-mid);
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    box-sizing: border-box;
+    transition: background 0.15s;
+  }
+
+  .search-clear svg {
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .search-clear:hover { background: var(--gold-light); color: var(--gold-dark); }
+  .search-clear.visible { display: flex; }
 
   .search-input {
     width: 100%;
-    padding: 8px 12px 8px 34px;
+    height: 36px;
+    padding: 0 32px 0 34px;
     border: 1px solid var(--border);
     border-radius: var(--radius);
     font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
@@ -210,6 +387,7 @@
     color: var(--text-dark);
     outline: none;
     transition: border-color 0.18s;
+    box-sizing: border-box;
   }
 
   .search-input:focus { border-color: var(--gold); background: var(--surface); }
@@ -368,8 +546,8 @@
   }
 
   .icon-btn {
-    width: 30px;
-    height: 30px;
+    width: 36px;
+    height: 36px;
     border-radius: 8px;
     border: 1px solid var(--border);
     background: transparent;
@@ -530,14 +708,15 @@
     font-weight: 500;
     color: var(--text-dark);
     margin-bottom: 20px;
+    line-height: 36px;
   }
 
   .modal-close {
     position: absolute;
-    top: 16px;
-    right: 16px;
-    width: 30px;
-    height: 30px;
+    top: 28px;
+    right: 28px;
+    width: 36px;
+    height: 36px;
     border-radius: 8px;
     border: 1px solid var(--border);
     background: transparent;
@@ -575,6 +754,16 @@
     background: var(--warm-white);
     outline: none;
     transition: border-color 0.18s;
+    min-height: 38px;
+    box-sizing: border-box;
+  }
+
+  select.form-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239a8e88' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
   }
 
   .form-control:focus { border-color: var(--gold); background: var(--surface); }
@@ -680,17 +869,30 @@
   .toast.show { transform: translateY(0); opacity: 1; }
 
   /* ZOOM CONTROLS */
-  .zoom-controls {
+  /* FLOATING ISLAND */
+  .floor-island {
     position: absolute;
-    bottom: calc(49px + env(safe-area-inset-bottom, 0px) + 16px);
-    right: 20px;
+    bottom: calc(49px + env(safe-area-inset-bottom, 0px) + 16px); /* mobile */
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    flex-direction: column;
-    gap: 4px;
+    align-items: center;
+    gap: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 6px;
+    box-shadow: var(--shadow-md);
     z-index: 10;
+    white-space: nowrap;
   }
 
-  .zoom-btn {
+  .floorplan-toolbar { display: none; }
+  @media (min-width: 768px) {
+    .floor-island { bottom: 24px; }
+  }
+
+
     width: 36px;
     height: 36px;
     background: var(--surface);
@@ -926,6 +1128,121 @@
     margin: 8px 0;
   }
 
+  
+  /* ── SIDE NAV (desktop) + LAYOUT ────────────────────────────────────────── */
+  .app-layout {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .side-nav {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    /* Hide mobile-only elements */
+    .app-header { display: none; }
+    .tabs { display: none; }
+
+    /* Show side nav */
+    .side-nav {
+      display: flex;
+      flex-direction: column;
+      width: 220px;
+      flex-shrink: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    .side-nav-logo {
+      padding: 24px 20px 20px;
+      border-bottom: 1px solid var(--border);
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-dark);
+      letter-spacing: 0.02em;
+      flex-shrink: 0;
+    }
+
+    .side-nav-logo span { color: var(--gold); }
+
+    .side-nav-section-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-light);
+      padding: 16px 20px 4px;
+    }
+
+    .side-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 10px 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-mid);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      border-radius: 8px;
+      margin: 1px 8px;
+      width: calc(100% - 16px);
+      transition: all 0.15s;
+    }
+
+    .side-nav-item:hover { background: var(--warm-white); color: var(--text-dark); }
+    .side-nav-item.active { background: #fdf8ee; color: var(--gold-dark); font-weight: 500; }
+    .side-nav-item.active svg { color: var(--gold); }
+    .side-nav-item svg { color: var(--text-light); flex-shrink: 0; transition: color 0.15s; }
+    .side-nav-item-danger { color: var(--danger); }
+    .side-nav-item-danger svg { color: var(--danger); }
+    .side-nav-item-danger:hover { background: #fdf0ef; color: var(--danger); }
+
+    .side-nav-spacer { flex: 1; }
+
+    .side-nav-bottom {
+      border-top: 1px solid var(--border);
+      padding: 8px 0;
+      flex-shrink: 0;
+    }
+
+    .side-nav-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 6px 8px;
+    }
+
+    /* Main content fills remaining space */
+    #main-content {
+      flex: 1;
+      min-width: 0;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+  }
+
+  @media (max-width: 767px) {
+    /* Move hamburger to left on mobile */
+    .app-header {
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+    .app-header .app-title { flex: 1; }
+  }
+
   .drag-handle {
     position: absolute;
     top: -6px;
@@ -941,6 +1258,7 @@
 </head>
 <body>
 
+<!-- MOBILE HEADER -->
 <header class="app-header">
   <div class="app-title">Wedding <span>Planner</span></div>
   <button class="hamburger-btn" onclick="openDrawer()" aria-label="Menu">
@@ -948,8 +1266,7 @@
   </button>
 </header>
 
-
-<!-- BOTTOM NAV -->
+<!-- MOBILE BOTTOM NAV -->
 <nav class="tabs">
   <button class="tab active" onclick="switchTab('guests', this)">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
@@ -959,6 +1276,48 @@
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
     Floor Plan
   </button>
+</nav>
+
+<!-- APP LAYOUT WRAPPER -->
+<div class="app-layout">
+
+<!-- SIDE NAV (desktop only) -->
+<nav class="side-nav">
+  <div class="side-nav-logo">Wedding <span>Planner</span></div>
+
+  <div class="side-nav-section-label">Views</div>
+  <button class="side-nav-item active" id="sidenav-guests" onclick="switchTab('guests', this)">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+    Guest List
+  </button>
+  <button class="side-nav-item" id="sidenav-floorplan" onclick="switchTab('floorplan', this)">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+    Floor Plan
+  </button>
+
+  <div class="side-nav-spacer"></div>
+
+  <div class="side-nav-bottom">
+    <div class="side-nav-section-label">Data</div>
+    <button class="side-nav-item" onclick="exportData()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Export JSON
+    </button>
+    <label class="side-nav-item" style="cursor:pointer">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Import JSON
+      <input type="file" accept=".json" style="display:none" onchange="importData(event)">
+    </label>
+    <button class="side-nav-item" onclick="loadSampleData();renderGuests();renderFloorPlan();toast('Sample data loaded!')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      Load samples
+    </button>
+    <div class="side-nav-divider"></div>
+    <button class="side-nav-item side-nav-item-danger" onclick="clearAllData()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+      Clear all data
+    </button>
+  </div>
 </nav>
 
 <!-- DRAWER OVERLAY -->
@@ -999,30 +1358,62 @@
 <!-- GUESTS PANEL -->
 <main id="main-content" style="flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden">
 <div id="panel-guests" class="panel active">
-  <div class="guests-toolbar">
-    <div class="search-wrap">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input class="search-input" id="guestSearch" placeholder="Search guests..." oninput="renderGuests()">
-    </div>
-    <select class="filter-select" id="filterSide" onchange="renderGuests()">
-      <option value="">Everyone</option>
-      <option value="groom">Groom side</option>
-      <option value="bride">Bride side</option>
-    </select>
-    <select class="filter-select" id="filterRsvp" onchange="renderGuests()">
-      <option value="">All RSVP</option>
-      <option value="confirmed">Confirmed</option>
-      <option value="pending">Pending</option>
-      <option value="declined">Declined</option>
-      <option value="maybe">Maybe</option>
-    </select>
+
+  <div class="guests-panel-header">
+    <h1 class="guests-heading">Guest List</h1>
+    <div style="flex:1"></div>
     <button class="btn btn-primary" onclick="openGuestModal()">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
       Add Guest
     </button>
   </div>
 
-  <div class="guests-stats" id="guestsStats"></div>
+  <div class="guests-filters">
+    <div class="search-wrap" style="flex:1;min-width:0;max-width:280px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="search-input" id="guestSearch" placeholder="Search guests..." oninput="renderGuests()">
+      <button class="search-clear" id="searchClear" onclick="clearSearch()" title="Clear">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+      <button class="filter-toggle-btn" id="filterToggleBtn" onclick="toggleFilterPanel()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+        Filter
+        <span class="filter-badge" id="filterBadge" style="display:none"></span>
+      </button>
+      <div class="view-toggle">
+        <button class="view-toggle-btn active" id="viewBtnList" onclick="setGuestView('list')" title="List view">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor"><path d="M360-200v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360ZM200-160q-33 0-56.5-23.5T120-240q0-33 23.5-56.5T200-320q33 0 56.5 23.5T280-240q0 33-23.5 56.5T200-160Zm0-240q-33 0-56.5-23.5T120-480q0-33 23.5-56.5T200-560q33 0 56.5 23.5T280-480q0 33-23.5 56.5T200-400Zm-56.5-263.5Q120-687 120-720t23.5-56.5Q167-800 200-800t56.5 23.5Q280-753 280-720t-23.5 56.5Q233-640 200-640t-56.5-23.5Z"/></svg>
+        </button>
+        <button class="view-toggle-btn" id="viewBtnTable" onclick="setGuestView('table')" title="By table">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor"><path d="M173-600h614l-34-120H208l-35 120Zm307-60Zm192 140H289l-11 80h404l-10-80ZM160-160l49-360h-89q-20 0-31.5-16T82-571l57-200q4-13 14-21t24-8h606q14 0 24 8t14 21l57 200q5 19-6.5 35T840-520h-88l48 360h-80l-27-200H267l-27 200h-80Z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="filter-panel" id="filterPanel">
+    <div class="filter-chip-group">
+      <div class="filter-chip-label">Side</div>
+      <div class="filter-chips" id="chipsside">
+        <button class="filter-chip active" data-group="side" data-value="" onclick="selectChip(this)">Everyone</button>
+        <button class="filter-chip" data-group="side" data-value="groom" onclick="selectChip(this)">Groom</button>
+        <button class="filter-chip" data-group="side" data-value="bride" onclick="selectChip(this)">Bride</button>
+      </div>
+    </div>
+    <div class="filter-chip-group">
+      <div class="filter-chip-label">RSVP</div>
+      <div class="filter-chips" id="chipsrsvp">
+        <button class="filter-chip active" data-group="rsvp" data-value="" onclick="selectChip(this)">All</button>
+        <button class="filter-chip" data-group="rsvp" data-value="confirmed" onclick="selectChip(this)">Confirmed</button>
+        <button class="filter-chip" data-group="rsvp" data-value="pending" onclick="selectChip(this)">Pending</button>
+        <button class="filter-chip" data-group="rsvp" data-value="declined" onclick="selectChip(this)">Declined</button>
+        <button class="filter-chip" data-group="rsvp" data-value="maybe" onclick="selectChip(this)">Maybe</button>
+      </div>
+    </div>
+    <button class="filter-clear-btn" onclick="clearFilters()">Clear filters</button>
+  </div>
 
   <div class="guests-list" id="guestsList">
     <div class="empty-state">
@@ -1034,28 +1425,29 @@
 
 <!-- FLOOR PLAN PANEL -->
 <div id="panel-floorplan" class="panel">
-  <div class="floorplan-toolbar">
-    <button class="btn btn-primary" onclick="openTableModal()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      Add Table
-    </button>
-    <button class="btn btn-ghost btn-sm" onclick="resetView()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-      Reset view
-    </button>
-    <span id="tableCount" style="font-size:13px;color:var(--text-light);margin-left:4px"></span>
-  </div>
   <div class="floorplan-wrap" id="floorplanWrap">
     <div id="canvas-container"></div>
-    <div class="zoom-controls">
-      <button class="zoom-btn" onclick="zoom(0.15)">+</button>
-      <div class="zoom-level" id="zoomLevel">100%</div>
-      <button class="zoom-btn" onclick="zoom(-0.15)">−</button>
+    <div class="floor-island">
+      <button class="btn btn-primary" onclick="openTableModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add Table
+      </button>
+      <div style="display:flex;gap:8px;margin-left:8px">
+        <button class="btn btn-ghost" onclick="zoom(0.15)" title="Zoom in" style="width:36px;padding:0;justify-content:center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 -960 960 960" fill="currentColor"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Zm-40-60v-80h-80v-80h80v-80h80v80h80v80h-80v80h-80Z"/></svg>
+        </button>
+        <button class="btn btn-ghost" id="zoomLevel" onclick="resetView()" title="Reset view" style="width:58px;padding:0;justify-content:center;font-variant-numeric:tabular-nums">100%</button>
+        <button class="btn btn-ghost" onclick="zoom(-0.15)" title="Zoom out" style="width:36px;padding:0;justify-content:center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 -960 960 960" fill="currentColor"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400ZM280-540v-80h200v80H280Z"/></svg>
+        </button>
+      </div>
     </div>
   </div>
 </div>
 
 </main>
+
+</div><!-- /.app-layout -->
 
 <!-- GUEST MODAL -->
 <div class="modal-overlay" id="guestModal">
@@ -1111,7 +1503,7 @@
 <!-- TABLE MODAL -->
 <div class="modal-overlay" id="tableModal">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal('tableModal')">×</button>
+    <button class="modal-close" onclick="cancelTableModal()">×</button>
     <h2 class="modal-title" id="tableModalTitle">Add Table</h2>
     <input type="hidden" id="tableEditId">
     <div class="form-group">
@@ -1141,7 +1533,7 @@
       <input class="form-control" id="tableSeats" type="number" min="1" max="30" value="8" placeholder="e.g. 8">
     </div>
     <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal('tableModal')">Cancel</button>
+      <button class="btn btn-ghost" onclick="cancelTableModal()">Cancel</button>
       <button class="btn btn-primary" onclick="saveTable()">Save</button>
     </div>
   </div>
@@ -1152,16 +1544,18 @@
   <div class="modal" style="max-width:520px">
     <button class="modal-close" onclick="closeModal('tableDetailModal')">×</button>
     <div id="tableDetailContent"></div>
-    <div class="modal-actions">
-      <button class="btn btn-danger btn-sm" id="tableDetailDelete" onclick="deleteTableFromDetail()">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+    <div class="modal-actions" style="justify-content:space-between">
+      <button class="btn btn-danger" id="tableDetailDelete" onclick="deleteTableFromDetail()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
         Delete table
       </button>
-      <button class="btn btn-ghost" onclick="editTableFromDetail()">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-        Edit
-      </button>
-      <button class="btn btn-primary" onclick="saveTableAssignments()">Done</button>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-ghost" onclick="editTableFromDetail()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Edit
+        </button>
+        <button class="btn btn-primary" onclick="saveTableAssignments()">Done</button>
+      </div>
     </div>
   </div>
 </div>
@@ -1190,7 +1584,7 @@ let state = {
 };
 
 // VIEWPORT
-let viewport = { x: 80, y: 80, scale: 1 };
+let viewport = { x: 0, y: 0, scale: 1 };
 let isPanning = false;
 let panStart = { x: 0, y: 0 };
 let viewportStart = { x: 0, y: 0 };
@@ -1213,9 +1607,12 @@ function toast(msg) {
 }
 
 function switchTab(tab, el) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab, .side-nav-item[id^="sidenav-"]').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  // Activate the clicked element + its counterpart
   el.classList.add('active');
+  const mirror = document.getElementById('sidenav-' + tab) || document.querySelector(`.tab[onclick*="'${tab}'"]`);
+  if (mirror && mirror !== el) mirror.classList.add('active');
   document.getElementById('panel-' + tab).classList.add('active');
   if (tab === 'floorplan') { renderFloorPlan(); requestAnimationFrame(resetView); }
 }
@@ -1361,20 +1758,81 @@ function guestCardHtml(g) {
       </div>
       <div class="guest-actions">
         <button class="icon-btn" onclick="openGuestModal(${g.id})" title="Edit">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z"/></svg>
         </button>
         <button class="icon-btn danger" onclick="deleteGuest(${g.id})" title="Delete">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
         </button>
       </div>
     </div>`;
 }
 
+let guestView = 'list'; // 'list' | 'table'
+
+function setGuestView(v) {
+  guestView = v;
+  document.getElementById('viewBtnList').classList.toggle('active', v === 'list');
+  document.getElementById('viewBtnTable').classList.toggle('active', v === 'table');
+  renderGuests();
+}
+
+function clearSearch() {
+  document.getElementById('guestSearch').value = '';
+  document.getElementById('searchClear').classList.remove('visible');
+  renderGuests();
+}
+
+// ─── FILTER STATE ────────────────────────────────────────────────────────────
+let filterSide = '';
+let filterRsvp = '';
+
+function toggleFilterPanel() {
+  const panel = document.getElementById('filterPanel');
+  const btn = document.getElementById('filterToggleBtn');
+  const isOpen = panel.classList.toggle('open');
+  btn.classList.toggle('active', isOpen);
+}
+
+function selectChip(el) {
+  const group = el.dataset.group;
+  const value = el.dataset.value;
+  // Deactivate siblings
+  el.closest('.filter-chips').querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  if (group === 'side') filterSide = value;
+  if (group === 'rsvp') filterRsvp = value;
+  updateFilterBadge();
+  renderGuests();
+}
+
+function clearFilters() {
+  filterSide = '';
+  filterRsvp = '';
+  document.querySelectorAll('.filter-chip').forEach(c => {
+    c.classList.toggle('active', c.dataset.value === '');
+  });
+  updateFilterBadge();
+  renderGuests();
+}
+
+function updateFilterBadge() {
+  const count = (filterSide ? 1 : 0) + (filterRsvp ? 1 : 0);
+  const badge = document.getElementById('filterBadge');
+  const btn = document.getElementById('filterToggleBtn');
+  if (count > 0) {
+    badge.textContent = count;
+    badge.style.display = 'flex';
+    btn.classList.add('active');
+  } else {
+    badge.style.display = 'none';
+    const panel = document.getElementById('filterPanel');
+    if (!panel.classList.contains('open')) btn.classList.remove('active');
+  }
+}
+
 function renderGuests() {
   const search = document.getElementById('guestSearch').value.toLowerCase();
-  const filterSide = document.getElementById('filterSide').value;
-  const filterRsvp = document.getElementById('filterRsvp').value;
-  const isFiltered = search || filterSide || filterRsvp;
+  document.getElementById('searchClear').classList.toggle('visible', search.length > 0);
 
   const matches = g => {
     const name = (g.firstName + ' ' + g.lastName).toLowerCase();
@@ -1384,24 +1842,23 @@ function renderGuests() {
     return true;
   };
 
-  // Stats (always from full list)
-  const total = state.guests.length;
-  const confirmed = state.guests.filter(g => g.rsvp === 'confirmed').length;
-  const declined  = state.guests.filter(g => g.rsvp === 'declined').length;
-  const pending   = state.guests.filter(g => g.rsvp === 'pending').length;
-  const assigned  = state.guests.filter(g => g.tableId).length;
+  // Update chip counts
+  const total     = state.guests.length;
   const groom     = state.guests.filter(g => g.side === 'groom').length;
   const bride     = state.guests.filter(g => g.side === 'bride').length;
+  const confirmed = state.guests.filter(g => g.rsvp === 'confirmed').length;
+  const pending   = state.guests.filter(g => g.rsvp === 'pending').length;
+  const declined  = state.guests.filter(g => g.rsvp === 'declined').length;
+  const maybe     = state.guests.filter(g => g.rsvp === 'maybe').length;
 
-  document.getElementById('guestsStats').innerHTML = `
-    <div class="stat-pill"><div class="dot" style="background:#888"></div> Total: <strong>${total}</strong></div>
-    <div class="stat-pill"><div class="dot" style="background:var(--success)"></div> Confirmed: <strong>${confirmed}</strong></div>
-    <div class="stat-pill"><div class="dot" style="background:var(--warning)"></div> Pending: <strong>${pending}</strong></div>
-    <div class="stat-pill"><div class="dot" style="background:var(--danger)"></div> Declined: <strong>${declined}</strong></div>
-    <div class="stat-pill"><div class="dot" style="background:var(--blue-groom)"></div> Groom: <strong>${groom}</strong></div>
-    <div class="stat-pill"><div class="dot" style="background:var(--rose)"></div> Bride: <strong>${bride}</strong></div>
-    <div class="stat-pill"><div class="dot" style="background:var(--gold)"></div> Assigned: <strong>${assigned}/${total}</strong></div>
-  `;
+  const sideChips = document.querySelectorAll('[data-group="side"]');
+  const rsvpChips = document.querySelectorAll('[data-group="rsvp"]');
+  const sideCounts = [total, groom, bride];
+  const sideLabels = ['Everyone', 'Groom', 'Bride'];
+  sideChips.forEach((c, i) => { c.textContent = ''; c.classList.toggle('active', c.dataset.value === filterSide); c.textContent = `${sideLabels[i]} (${sideCounts[i]})`; });
+  const rsvpCounts = [total, confirmed, pending, declined, maybe];
+  const rsvpLabels = ['All', 'Confirmed', 'Pending', 'Declined', 'Maybe'];
+  rsvpChips.forEach((c, i) => { c.classList.toggle('active', c.dataset.value === filterRsvp); c.textContent = `${rsvpLabels[i]} (${rsvpCounts[i]})`; });
 
   const el = document.getElementById('guestsList');
 
@@ -1410,7 +1867,18 @@ function renderGuests() {
     return;
   }
 
-  // Grouped view — filter guests within each group
+  // ── FLAT LIST view ──────────────────────────────────────────────────────────
+  if (guestView === 'list') {
+    const list = state.guests.filter(matches);
+    if (!list.length) {
+      el.innerHTML = `<div class="empty-state"><div class="icon">🔍</div><p>No results</p></div>`;
+      return;
+    }
+    el.innerHTML = list.map(guestCardHtml).join('');
+    return;
+  }
+
+  // ── BY TABLE view ───────────────────────────────────────────────────────────
   const groups = [
     ...state.tables.map(t => ({
       id: t.id,
@@ -1450,9 +1918,7 @@ function renderGuests() {
         ${dot}
         <span class="group-name">${grp.label}</span>
         ${capacity}
-        ${grp.id !== null ? `<button class="icon-btn" style="margin-left:auto" onclick="openTableDetail(${grp.id})" title="Manage seats">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg>
-        </button>` : ''}
+        ${grp.id !== null ? `<button onclick="openTableDetail(${grp.id})" style="margin-left:auto;background:none;border:none;cursor:pointer;font-size:12px;font-weight:500;color:var(--text-light);padding:0;transition:color 0.15s" onmouseover="this.style.color='var(--gold-dark)'" onmouseout="this.style.color='var(--text-light)'">Edit table</button>` : ''}
       </div>
       <div class="group-cards">${grp.guests.map(guestCardHtml).join('')}</div>
     `;
@@ -1483,6 +1949,14 @@ function openTableModal(tableId) {
   setTimeout(() => document.getElementById('tableName').focus(), 50);
 }
 
+function cancelTableModal() {
+  const editId = parseInt(document.getElementById('tableEditId').value) || null;
+  closeModal('tableModal');
+  if (editId && editId === currentDetailTableId) {
+    openTableDetail(editId);
+  }
+}
+
 function saveTable() {
   const name = document.getElementById('tableName').value.trim();
   const seats = parseInt(document.getElementById('tableSeats').value);
@@ -1491,13 +1965,19 @@ function saveTable() {
   const editId = parseInt(document.getElementById('tableEditId').value) || null;
 
   if (editId) {
+    const assignedCount = state.guests.filter(g => g.tableId === editId).length;
+    if (seats < assignedCount) {
+      toast(`${assignedCount} guests are already assigned — remove some first`);
+      return;
+    }
     const idx = state.tables.findIndex(t => t.id === editId);
     state.tables[idx] = { ...state.tables[idx], name, seats, shape };
     toast('Table updated');
   } else {
-    const x = 200 + Math.random() * 800;
-    const y = 200 + Math.random() * 400;
-    state.tables.push({ id: state.nextTableId++, name, seats, shape, x, y });
+    const wrap = document.getElementById('floorplanWrap');
+    const cx = (wrap.clientWidth / 2 - viewport.x) / viewport.scale;
+    const cy = (wrap.clientHeight / 2 - viewport.y) / viewport.scale;
+    state.tables.push({ id: state.nextTableId++, name, seats, shape, x: cx - 60, y: cy - 55 });
     toast('Table added');
   }
 
@@ -1505,6 +1985,10 @@ function saveTable() {
   renderFloorPlan();
   renderGuests();
   saveLocal();
+  // If edited from table detail, reopen detail
+  if (editId && editId === currentDetailTableId) {
+    openTableDetail(editId);
+  }
 }
 
 function deleteTable(id) {
@@ -1547,7 +2031,13 @@ function renderTableDetail() {
   `).join('') : `<div style="padding:12px 16px;font-size:13px;color:var(--text-light)">No guests assigned yet.</div>`;
 
   // Multiselect options — unassigned or assigned elsewhere, not declined
-  const addable = state.guests.filter(g => g.rsvp !== 'declined' && g.tableId !== tableId);
+  const addable = state.guests
+    .filter(g => g.rsvp !== 'declined' && g.tableId !== tableId)
+    .sort((a, b) => {
+      if (!a.tableId && b.tableId) return -1;
+      if (a.tableId && !b.tableId) return 1;
+      return (a.firstName + a.lastName).localeCompare(b.firstName + b.lastName);
+    });
   const addableOptions = addable.map(g => {
     const elsewhere = g.tableId ? ` (${state.tables.find(tt => tt.id === g.tableId)?.name || ''})` : '';
     return `<option value="${g.id}">${g.firstName} ${g.lastName}${elsewhere}</option>`;
@@ -1565,16 +2055,17 @@ function renderTableDetail() {
     <div class="guest-assign-list" style="margin-bottom:14px">${assignedRows}</div>
 
     ${!isFull && addable.length ? `
-      <div style="display:flex;gap:8px;align-items:flex-start">
-        <select id="addGuestSelect" multiple size="4" style="flex:1;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;padding:4px;background:var(--warm-white);color:var(--text-dark);outline:none;min-height:80px">
+      <div style="display:flex;gap:8px;align-items:center">
+        <select id="addGuestSelect" class="form-control" style="flex:1">
+          <option value="">— Select a guest —</option>
           ${addableOptions}
         </select>
-        <button class="btn btn-primary btn-sm" onclick="addSelectedGuests()" style="align-self:flex-end;white-space:nowrap">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <button class="btn btn-primary" onclick="addSelectedGuests()" style="flex-shrink:0">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           Add
         </button>
       </div>
-      <p style="font-size:11px;color:var(--text-light);margin-top:5px">${available} seat${available !== 1 ? 's' : ''} free · hold Ctrl / Cmd to select multiple</p>
+      <p style="font-size:11px;color:var(--text-light);margin-top:6px">${available} seat${available !== 1 ? 's' : ''} free</p>
     ` : isFull ? `<p style="font-size:13px;color:var(--danger);font-weight:500">Table is full.</p>`
                : `<p style="font-size:13px;color:var(--text-light)">All guests have been assigned.</p>`}
   `;
@@ -1590,18 +2081,11 @@ function removeFromTable(guestId) {
 }
 
 function addSelectedGuests() {
-  const tableId = currentDetailTableId;
-  const t = state.tables.find(t => t.id === tableId);
   const select = document.getElementById('addGuestSelect');
-  if (!select) return;
-  const selected = [...select.selectedOptions].map(o => parseInt(o.value));
-  const available = t.seats - state.guests.filter(g => g.tableId === tableId).length;
-  const toAdd = selected.slice(0, available);
-  toAdd.forEach(id => {
-    const g = state.guests.find(g => g.id === id);
-    if (g) g.tableId = tableId;
-  });
-  if (selected.length > toAdd.length) toast(`Only ${available} seat${available !== 1 ? 's' : ''} available — added ${toAdd.length}`);
+  if (!select || !select.value) return;
+  const guestId = parseInt(select.value);
+  const g = state.guests.find(g => g.id === guestId);
+  if (g) g.tableId = currentDetailTableId;
   renderTableDetail();
   renderFloorPlan();
   renderGuests();
@@ -1633,8 +2117,28 @@ function renderFloorPlan() {
   const container = document.getElementById('canvas-container');
   container.innerHTML = '';
 
-  document.getElementById('tableCount').textContent =
+  const tc = document.getElementById('tableCount');
+  if (tc) tc.textContent =
     state.tables.length ? `${state.tables.length} table${state.tables.length === 1 ? '' : 's'}` : '';
+
+  // Empty state
+  const wrap = document.getElementById('floorplanWrap');
+  let emptyEl = document.getElementById('floorplan-empty');
+  if (!state.tables.length) {
+    if (!emptyEl) {
+      emptyEl = document.createElement('div');
+      emptyEl.id = 'floorplan-empty';
+      emptyEl.style.cssText = 'position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;gap:10px';
+      emptyEl.innerHTML = `
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="color:var(--text-light)"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        <p style="font-size:15px;font-weight:500;color:var(--text-mid);margin:0">No tables yet</p>
+        <p style="font-size:13px;color:var(--text-light);margin:0">Tap <strong style="color:var(--text-mid)">Add Table</strong> to get started</p>`;
+      wrap.appendChild(emptyEl);
+    }
+    return;
+  } else {
+    if (emptyEl) emptyEl.remove();
+  }
 
   state.tables.forEach(t => {
     const dims = getTableDims(t);
@@ -1718,8 +2222,8 @@ function setupTableDrag(el, tableData) {
       el.classList.add('selected');
     }
     e.preventDefault();
-    tableData.x = Math.max(0, ox + dx / viewport.scale);
-    tableData.y = Math.max(0, oy + dy / viewport.scale);
+    tableData.x = ox + dx / viewport.scale;
+    tableData.y = oy + dy / viewport.scale;
     el.style.left = tableData.x + 'px';
     el.style.top = tableData.y + 'px';
   };
@@ -1750,7 +2254,8 @@ function setupTableDrag(el, tableData) {
 function applyViewport() {
   const container = document.getElementById('canvas-container');
   container.style.transform = `translate(${viewport.x}px,${viewport.y}px) scale(${viewport.scale})`;
-  document.getElementById('zoomLevel').textContent = Math.round(viewport.scale * 100) + '%';
+  const zl = document.getElementById('zoomLevel');
+  if (zl) zl.textContent = Math.round(viewport.scale * 100) + '%';
 }
 
 function zoom(delta, cx, cy) {
@@ -1768,12 +2273,13 @@ function zoom(delta, cx, cy) {
 }
 
 function resetView() {
+  const wrap = document.getElementById('floorplanWrap');
+  if (!wrap) return;
   if (!state.tables.length) {
-    viewport = { x: 80, y: 80, scale: 1 };
+    viewport = { x: wrap.clientWidth / 2, y: wrap.clientHeight / 2, scale: 1 };
     applyViewport();
     return;
   }
-  const wrap = document.getElementById('floorplanWrap');
   const ww = wrap.clientWidth;
   const wh = wrap.clientHeight;
 
@@ -1880,15 +2386,32 @@ wrap.addEventListener('touchend', () => { isPanning = false; });
 function exportData() {
   try {
     const json = JSON.stringify(state, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(json);
+    a.href = url;
     a.download = 'wedding-seating.json';
     document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
+    setTimeout(() => {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 100);
     toast('File saved!');
   } catch(e) {
-    toast('Export error: ' + e.message);
+    // Fallback for environments where Blob URL is blocked (e.g. iOS file://)
+    try {
+      const json = JSON.stringify(state, null, 2);
+      const a = document.createElement('a');
+      a.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(json);
+      a.download = 'wedding-seating.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      toast('File saved!');
+    } catch(e2) {
+      toast('Export error: ' + e2.message);
+    }
   }
 }
 
@@ -2032,6 +2555,14 @@ const hadSaved = loadLocal();
 if (!hadSaved && state.guests.length === 0 && state.tables.length === 0) loadSampleData();
 renderGuests();
 renderFloorPlan();
+requestAnimationFrame(() => {
+  const wrap = document.getElementById('floorplanWrap');
+  if (wrap && viewport.x === 0 && viewport.y === 0) {
+    viewport.x = wrap.clientWidth / 2;
+    viewport.y = wrap.clientHeight / 2;
+    applyViewport();
+  }
+});
 
 // ─── SERVICE WORKER (PWA offline) ────────────────────────────────────────────
 if ('serviceWorker' in navigator) {
