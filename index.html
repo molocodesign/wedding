@@ -40,17 +40,18 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html {
-    background: #faf8f3;
+  html, body {
+    height: var(--real-vh, 100vh);
+    overflow: hidden;
   }
 
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
-    background: var(--cream);
+    background: #faf8f3;
     color: var(--text-dark);
-    min-height: 100vh;
-    min-height: 100dvh;
-    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
 
   /* HEADER */
@@ -129,8 +130,8 @@
   }
 
   /* PANELS */
-  .panel { display: none; height: calc(var(--real-vh, 100vh) - 60px); margin-bottom: calc(49px + env(safe-area-inset-bottom, 0px)); }
-  .panel.active { display: flex; flex-direction: column; }
+  .panel { display: none; flex-direction: column; flex: 1; min-height: 0; }
+  .panel.active { display: flex; }
 
   /* BUTTONS */
   .btn {
@@ -401,6 +402,7 @@
     overflow: hidden;
     background: var(--warm-white);
     cursor: grab;
+    touch-action: none;
   }
 
   .floorplan-wrap:active { cursor: grabbing; }
@@ -994,6 +996,7 @@
 </div>
 
 <!-- GUESTS PANEL -->
+<main id="main-content" style="flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden">
 <div id="panel-guests" class="panel active">
   <div class="guests-toolbar">
     <div class="search-wrap">
@@ -1050,6 +1053,8 @@
     </div>
   </div>
 </div>
+
+</main>
 
 <!-- GUEST MODAL -->
 <div class="modal-overlay" id="guestModal">
@@ -1830,6 +1835,7 @@ wrap.addEventListener('wheel', (e) => {
 let lastTouches = null;
 
 wrap.addEventListener('touchstart', (e) => {
+  e.preventDefault();
   if (e.touches.length === 1 && !e.target.closest('.floor-table')) {
     isPanning = true;
     panStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
@@ -1843,7 +1849,7 @@ wrap.addEventListener('touchstart', (e) => {
     pinchStartScale = viewport.scale;
     lastTouches = e.touches;
   }
-}, { passive: true });
+}, { passive: false });
 
 wrap.addEventListener('touchmove', (e) => {
   if (e.touches.length === 1 && isPanning) {
@@ -2005,10 +2011,13 @@ function loadSampleData() {
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 // ─── REAL VIEWPORT HEIGHT (fixes iOS Safari bottom bar) ──────────────────────
 function setRealVh() {
+  // window.innerHeight = full height including area behind Safari bar (with viewport-fit=cover)
   document.documentElement.style.setProperty('--real-vh', window.innerHeight + 'px');
+  // also expose safe area for JS use if needed
 }
 setRealVh();
 window.addEventListener('resize', setRealVh);
+window.addEventListener('orientationchange', () => setTimeout(setRealVh, 100));
 
 // Surface JS errors visibly instead of silent white screen
 window.onerror = function(msg, src, line, col, err) {
